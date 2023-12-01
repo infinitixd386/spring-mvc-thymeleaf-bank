@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Card Details</title>
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/custom.css" rel="stylesheet"/>
+</head>
+<body>
+<header th:replace="menu.html :: header"/>
+<div class="container">
+    <div class="card border border-info border-3">
+        <div class="card-header bg-info">
+            <h3>BankCard Details</h3>
+        </div>
+        <div class="card-body bg-light">
+            <dl class="row">
+                <dt class="col-sm-3">Card Number</dt>
+                <dd class="col-sm-9" th:text="${bankCardModel.cardNumber}"/>
+
+                <dt class="col-sm-3">Validity</dt>
+                <dd class="col-sm-9" th:text="${bankCardModel.validity}"/>
+
+                <dt class="col-sm-3">Card Type</dt>
+                <dd class="col-sm-9" th:text="${bankCardModel.cardType}"/>
+
+                <dt class="col-sm-3">Balance</dt>
+                <dd class="col-sm-9" th:text="${bankCardModel.balance}"/>
+            </dl>
+        </div>
+    </div>
+    <div class="card border border-info border-3 mt-3">
+        <div class="card-header bg-info">
+            <h2>Update Balance</h2>
+        </div>
+        <div class="card-body bg-light">
+            <form th:action="@{/bankcard-details(bankCardId=${bankCardModel.id})}" th:object="${bankCardModel}" method="post"
+                  class="card-body">
+                <p class="alert-success alert" th:if="${successMessage}" th:text="${successMessage}">
+                    Balance updated successfully</p>
+                <div class="form-group">
+                    <label>New Balance</label>
+                    <input type="text" class="form-control" th:field="*{balance}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('balance')}"
+                          th:errors="*{balance}">New Balance Error></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
